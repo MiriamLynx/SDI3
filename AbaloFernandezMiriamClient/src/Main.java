@@ -33,7 +33,7 @@ public class Main {
 				.createUsuariosService();
 
 		int num;
-		System.out.println("***Bienvenido a la consola del cliente EJB:");
+		System.out.println("Bienvenido a la consola del cliente EJB:");
 		while (true) {
 			mostrarMenu();
 			num = getOpcion();
@@ -139,11 +139,11 @@ public class Main {
 	}
 
 	private void printActivatedTag() {
-		System.out.println("*********** Usuarios activados ************");
+		System.out.println("\n*********** Usuarios activados ************");
 	}
 
 	private void printDesactivatedTag() {
-		System.out.println("*********** Usuarios desactivados ************");
+		System.out.println("\n*********** Usuarios desactivados ************");
 	}
 
 	private void printLineUsuario(Usuario a) {
