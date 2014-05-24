@@ -7,10 +7,12 @@ import impl.sdi.business.remote.SesionServiceRemote;
 import java.sql.SQLException;
 
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import com.sdi.model.Usuario;
 
 @Stateless
+@WebService
 public class EjbSesionService implements SesionServiceLocal,
 		SesionServiceRemote {
 

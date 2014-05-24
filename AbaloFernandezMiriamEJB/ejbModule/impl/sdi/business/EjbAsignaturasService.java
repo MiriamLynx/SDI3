@@ -14,11 +14,13 @@ import impl.sdi.business.remote.AsignaturasServiceRemote;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import com.sdi.model.Asignatura;
 import com.sdi.model.Usuario;
 
 @Stateless
+@WebService
 public class EjbAsignaturasService implements AsignaturasServiceLocal,
 		AsignaturasServiceRemote {
 

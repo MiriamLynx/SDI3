@@ -19,12 +19,14 @@ import impl.sdi.business.remote.UsuariosServiceRemote;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 
 import com.sdi.business.exception.BusinessException;
 import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 
 @Stateless
+@WebService
 public class EjbUsuariosService implements UsuariosServiceLocal,
 		UsuariosServiceRemote {
 

@@ -24,6 +24,10 @@ public class Matricula implements Serializable {
 		this.setCalificacion(calificacion);
 	}
 
+	public Matricula() {
+
+	}
+
 	public Asignatura getAsignatura() {
 		return asignatura;
 	}
