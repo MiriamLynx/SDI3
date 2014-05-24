@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/template-general.xhtml">
+
+	<ui:define name="titulo">
+		<center>
+			<img src="#{controllerSettings.asignacion}" /> <br />
+			<ui:include src="/snippets/language-form.xhtml" />
+		</center>
+	</ui:define>
+	<ui:define name="cuerpo">
+		<center>
+			<table>
+				<tr>
+					<td><h:form>
+							<h:commandLink value="#{msgs.salir}"
+								action="#{controllerSesion.logout}" />
+						</h:form></td>
+				</tr>
+			</table>
+			<br />
+			<h:form>
+				<table border="1">
+					<tr>
+						<th>#{msgs.codigo}</th>
+						<th>#{controllerAsignaturas.idAsignatura}</th>
+					</tr>
+					<tr>
+						<th>#{msgs.idalumno}</th>
+						<th><h:panelGroup>
+								<h:inputText id="alumno"
+									value="#{controllerAsignaturas.idAlumno}" required="true"
+									requiredMessage="#{msgs.campo_obligatorio}" />
+								<h:message for="alumno" />
+							</h:panelGroup></th>
+					</tr>
+				</table>
+				<br />
+				<center>
+					<h:commandButton align="left" value="#{msgs.enviar}"
+						action="#{controllerAsignaturas.asignarAlumno}">
+					</h:commandButton>
+				</center>
+				<br />
+				<center>
+					<h:outputLabel value="#{msgs.datos_invalidos}"
+						rendered="#{controllerUsuarios.nomatch}" />
+				</center>
+			</h:form>
+			<h:outputLabel value="#{msgs.datos_invalidos}"
+				rendered="#{controllerAsignaturas.invalido}" />
+		</center>
+	</ui:define>
+</ui:composition>

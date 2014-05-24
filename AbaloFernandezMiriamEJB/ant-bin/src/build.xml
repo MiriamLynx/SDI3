@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<!-- ****************************************************************** -->
+<!-- Fichero Build XML para la asignatura SDI de la EII  -->
+<!-- 				Universidad de Oviedo 			-->
+<!-- ****************************************************************** -->
+
+<project name="Prototipo Web" default="deploy" basedir=".">
+	<property environment="env" />
+
+	<!-- Propiedades Generales del proyecto -->
+	<property name="appname" value="sdi" />
+	<property name="deploy.dir" value="${env.JBOSS_HOME}/standalone/deployments" />
+	<property name="build.dir" value="../ant-bin" />
+	<property name="base.package" value="com/sdi" />
+	
+
+	<!-- Directorios destino de la compilacion y empaquetado -->
+	<property name="ear.file.name" value="${appname}.ear" />
+	<property name="ejb3.file.name" value="${appname}.ejb3.jar" />
+	<property name="common.jar.file.name" value="${appname}.common.jar" />
+	<property name="war.file.name" value="${appname}.war" />
+
+	<property name="build.compiler" value="modern" />
+	<property name="build.src" value="${build.dir}/src" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="build.web" value="${build.dir}/web" />
+	<property name="build.web-inf" value="${build.web}/WEB-INF" />
+	<property name="build.ear" value="${build.dir}/ear" />
+
+	<!-- Directorios fuente para la compilacion y empaquetado -->
+	<property name="src.java.dir" value="../src" />
+	<property name="lib.dir" value="${build.web-inf}/lib" />
+	<property name="compilelib.dir" value="../lib" />
+	<property name="devetc.dir" value="${build.web-inf}" />
+	<property name="web.dir" value="../WebContent" />
+
+	<!--Directorio de distribucion -->
+	<property name="distribution.dir" value="../distribution" />
+
+	<!-- Miscelanea -->
+	<property name="ant.home" value="." />
+	<property name="debug" value="on" />
+	<property name="optimize" value="off" />
+	<property name="deprecation" value="off" />
+
+	<!-- =================================================================== -->
+	<!-- Patrones de fichero utiles para las tareas 			     -->
+	<!-- =================================================================== -->
+
+	<!-- All project source files. These source files will be copied -->
+	<!-- to the destination source directory in the prepare task. -->
+	<patternset id="all.src.files">
+
+		<!-- All java files -->
+		<include name="**/*.java" />
+
+		<!-- All conf files -->
+		<include name="**/*.xml" />
+		<include name="**/*.properties" />
+
+		<!-- All web files -->
+		<include name="**/*.jpg" />
+		<include name="**/*.gif" />
+		<include name="**/*.js" />
+		<include name="**/*.jsp" />
+		<include name="**/*.html" />
+		<include name="**/*.xhtml" />
+
+	</patternset>
+
+	<!-- Files in business & persistence layer only for EJB.JAR-->
+	<patternset id="business.class.files">
+		<include name="${base.package}/business/**/impl/**" />
+		<include name="${base.package}/persistence/**" />
+	</patternset>
+
+	<!-- Files in interfaces & presentation layers for .WAR -->
+	<patternset id="presentation.class.files">
+		<include name="${base.package}/presentation/**" />
+		<include name="*.properties" />
+	</patternset>
+
+	<!-- Common files for .WAR & ejb.JAR -->
+	<patternset id="common.class.files">
+		<include name="${base.package}/business/**" />
+		<exclude name="${base.package}/business/**/impl/**" />
+		<include name="${base.package}/model/**" />
+		<include name="${base.package}/infrastructure/**" />
+	</patternset>
+
+	<!-- Jars in the EAR's /lib directory -->
+	<patternset id="ear.lib.files">
+		<include name="${lib.dir}/*.jar" />
+	</patternset>
+
+	<!-- ================================================================== -->
+	<!-- Imprime por pantalla las variables de compilacion 		    -->
+	<!-- ================================================================== -->
+	<target name="env">
+		<echo message="build.compiler = ${build.compiler}" />
+		<echo message="java.class.path = ${java.class.path}" />
+		<echo message="java.home = ${java.home}" />
+		<echo message="user.home = ${user.home}" />
+		<echo message="jboss.home = ${env.JBOSS_HOME}" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Prepares the build directory                                        -->
+	<!-- =================================================================== -->
+	<target name="prepare" depends="env, clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${distribution.dir}" />
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.src}" />
+		<mkdir dir="${build.web}" />
+		<mkdir dir="${build.web-inf}" />
+		<mkdir dir="${distribution.dir}" />
+
+		<copy todir="${build.src}" filtering="on">
+			<fileset dir="${src.java.dir}">
+				<patternset refid="all.src.files" />
+			</fileset>
+		</copy>
+
+		<copy todir="${build.web}">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Compiles the source directory                                       -->
+	<!-- =================================================================== -->
+	<target name="compile" depends="prepare">
+		<javac srcdir="${build.src}" 
+				destdir="${build.classes}" 
+				debug="${debug}" 
+				deprecation="${deprecation}" 
+				optimize="${optimize}" >
+			
+			<classpath>
+				<path>
+					<fileset dir="${lib.dir}" />
+					<fileset dir="${compilelib.dir}" />
+				</path>
+			</classpath>
+		</javac>
+	</target>
+
+
+	<!-- =================================================================== -->
+	<!-- Genera el fichero .EJB3 con la aplicacion WEB			-->
+	<!-- =================================================================== -->
+	<target name="ejb3" depends="compile">
+		<jar jarfile="${distribution.dir}/${ejb3.file.name}">
+			<fileset dir="${build.classes}">
+				<patternset refid="business.class.files" />
+			</fileset>
+			<fileset dir="${build.src}">
+				<include name="persistence.properties" />
+			</fileset>
+		</jar>
+		<jar jarfile="${distribution.dir}/${common.jar.file.name}">
+			<fileset dir="${build.classes}">
+				<patternset refid="common.class.files" />
+			</fileset>
+			<fileset dir="${build.src}">
+				<include name="factories.properties" />
+				<include name="jndi.properties" />
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Genera el fichero .WAR con la aplicacion WEB -->
+	<!-- =================================================================== -->
+	<target name="war" depends="ejb3">
+		<war warfile="${distribution.dir}/${war.file.name}" webxml="${devetc.dir}/web.xml">
+			<fileset dir="${build.web}" />
+			<lib dir="${lib.dir}" />
+			<classes dir="${build.classes}">
+				<patternset refid="presentation.class.files" />
+			</classes>
+			<classes dir="${build.src}">
+				<patternset>
+					<include name="*.properties" />
+					<exclude name="factories.properties" />
+					<exclude name="jndi.properties" />
+					<exclude name="persistence.properties" />
+				</patternset>
+			</classes>
+			<webinf dir="${devetc.dir}">
+				<include name="faces-config.xml" />
+			</webinf>
+		</war>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Genera el fichero .EAR con las dos partes -->
+	<!-- =================================================================== -->
+	<target name="ear" depends="war">
+		<copy toDir="${build.ear}/lib" file="${lib.dir}/hsqldb.jar"/>
+		<jar jarfile="${distribution.dir}/${ear.file.name}" basedir="${build.ear}">
+			<metainf dir="${devetc.dir}">
+				<include name="application.xml" />
+			</metainf>
+			<fileset dir="${distribution.dir}" includes="*.ejb3,*.par,*.jar,*.war" />
+		</jar>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Desplegar en JBOSS -->
+	<!-- =================================================================== -->
+	<target name="deploy" depends="ear">
+		<delete file="${deploy.dir}/${war.file.name}"/>
+		<copy todir="${deploy.dir}">
+			<fileset dir="${distribution.dir}">
+				<include name="*.ear" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Limpia el directorio de build						-->
+	<!-- =================================================================== -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>

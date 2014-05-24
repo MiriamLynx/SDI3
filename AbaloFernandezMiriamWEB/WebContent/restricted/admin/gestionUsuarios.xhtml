@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/template-general.xhtml">
+
+	<ui:define name="titulo">
+		<center>
+			<img src="#{controllerSettings.usuarios}" /> <br />
+			<ui:include src="/snippets/language-form.xhtml" />
+		</center>
+		<h:form>
+			<h:commandLink value="#{msgs.salir}"
+				action="#{controllerSesion.logout}" />
+		</h:form>
+	</ui:define>
+	<ui:define name="cuerpo">
+		<br />
+		<h:form>
+			<table>
+				<tr>
+					<td>#{msgs.nombre_apellido} <h:panelGroup>
+							<h:inputText id="criterio_buscado"
+								value="#{controllerUsuarios.criterio_buscado}" />
+							<h:message for="criterio_buscado" />
+							<h:commandButton align="left" value="#{msgs.buscar}"
+								action="#{controllerUsuarios.buscarUsuarios}">
+							</h:commandButton>
+							<h:commandButton align="left" value="#{msgs.ver_todos}"
+								action="#{controllerUsuarios.gestionarUsuarios}">
+							</h:commandButton>
+						</h:panelGroup></td>
+				</tr>
+			</table>
+		</h:form>
+		<h2>#{msgs.usuarios_desactivados}</h2>
+		<center>
+			<h:form>
+				<h:dataTable var="usuario"
+					value="#{controllerUsuarios.desactivados}" border="1">
+					<h:column>
+						<f:facet name="header">#{msgs.id}</f:facet>#{usuario.id}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.nombre}</f:facet>#{usuario.nombre}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.apellidos}</f:facet>#{usuario.apellidos}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.correo}</f:facet>#{usuario.email}</h:column>
+					<h:column>
+						<table>
+							<tr>
+								<td><h:commandButton align="left" value="#{msgs.activar}"
+										action="#{controllerUsuarios.activarUsuario(usuario.id)}"></h:commandButton>
+								</td>
+								<td><h:commandButton value="#{msgs.editar_perfil}"
+										action="#{controllerUsuarios.cargarUsuario(usuario.id,usuario.nombre,usuario.apellidos,usuario.email)}"></h:commandButton>
+								</td>
+							</tr>
+						</table>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</center>
+		<h2>#{msgs.usuarios_activados}</h2>
+		<center>
+			<h:form>
+				<h:dataTable var="usuario" value="#{controllerUsuarios.activados}"
+					border="1">
+					<h:column>
+						<f:facet name="header">#{msgs.id}</f:facet>#{usuario.id}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.nombre}</f:facet>#{usuario.nombre}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.apellidos}</f:facet>#{usuario.apellidos}</h:column>
+					<h:column>
+						<f:facet name="header">#{msgs.correo}</f:facet>#{usuario.email}</h:column>
+					<h:column>
+						<table>
+							<tr>
+								<td><h:commandButton align="left"
+										value="#{msgs.desactivar}"
+										action="#{controllerUsuarios.desactivarUsuario(usuario.id)}"></h:commandButton>
+								</td>
+								<td><h:commandButton value="#{msgs.editar_perfil}"
+										action="#{controllerUsuarios.cargarUsuario(usuario.id,usuario.nombre,usuario.apellidos,usuario.email)}"></h:commandButton>
+								</td>
+							</tr>
+						</table>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</center>
+	</ui:define>
+</ui:composition>

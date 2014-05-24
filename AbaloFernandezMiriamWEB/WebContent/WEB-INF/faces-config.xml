@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+	</application>
+
+	<lifecycle>
+		<phase-listener>uo.sdi.util.filtros.LoginListener</phase-listener>
+	</lifecycle>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerAsignaturas.listadoAsignaturas}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/listadoAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuarios.listadoProfesores}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/listadoProfesores.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuarios.listadoProfesores}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/listadoProfesores.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerSesion.validar}</from-action>
+			<from-outcome>invalido</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerSesion.validar}</from-action>
+			<from-outcome>exito admin</from-outcome>
+			<to-view-id>/restricted/admin/menuAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerSesion.validar}</from-action>
+			<from-outcome>exito alumno</from-outcome>
+			<to-view-id>/restricted/alumno/menuAlumno.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerSesion.validar}</from-action>
+			<from-outcome>exito profesor</from-outcome>
+			<to-view-id>/restricted/profesor/menuProfesor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registro</from-outcome>
+			<to-view-id>/registro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/registro.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>incorrecto</from-outcome>
+			<to-view-id>/registro.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/menuAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/restricted/modificarDatosPerfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerUsuarios.gestionarUsuarios}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionUsuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controllerAsignaturas.listadoAsignaturas}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/gestionAsignaturas.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>business error</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>nueva</from-outcome>
+			<to-view-id>/restricted/admin/nuevaAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>asignar alumno</from-outcome>
+			<to-view-id>/restricted/admin/asignarAlumnoAAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>asignar profesor</from-outcome>
+			<to-view-id>/restricted/admin/asignarProfesorAAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/asignarAlumnoAAsignatura.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error business</from-outcome>
+			<to-view-id>/restricted/admin/asignarAlumnoAAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/asignarProfesorAAsignatura.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>error business</from-outcome>
+			<to-view-id>/restricted/admin/asignarProfesorAAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/nuevaAsignatura.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionAsignaturas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>error business</from-outcome>
+			<to-view-id>/restricted/admin/nuevaAsignatura.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/gestionUsuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionUsuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/restricted/admin/editarUsuarioAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/alumno/menuAlumno.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/restricted/modificarDatosPerfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito listado</from-outcome>
+			<to-view-id>/restricted/alumno/expediente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/listadoAsignaturas.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/listadoAsignaturas.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/listadoProfesores.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/listadoProfesores.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/profesor/menuProfesor.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controllerSesion.verAsignaturasImpartidas}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/profesor/asignaturasImpartidas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/restricted/modificarDatosPerfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/modificarDatosPerfil.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito alumno</from-outcome>
+			<to-view-id>/restricted/alumno/menuAlumno.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito profesor</from-outcome>
+			<to-view-id>/restricted/profesor/menuProfesor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito admin</from-outcome>
+			<to-view-id>/restricted/admin/menuAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>modificar contraseña</from-outcome>
+			<to-view-id>/restricted/cambiarPassword.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/cambiarPassword.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito alumno</from-outcome>
+			<to-view-id>/restricted/alumno/menuAlumno.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito profesor</from-outcome>
+			<to-view-id>/restricted/profesor/menuProfesor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito admin</from-outcome>
+			<to-view-id>/restricted/admin/menuAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>nomatch</from-outcome>
+			<to-view-id>/restricted/cambiarPassword.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/profesor/asignaturasImpartidas.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/profesor/alumnosMatriculados.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/profesor/alumnosMatriculados.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/profesor/alumnosMatriculados.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/editarUsuarioAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>modificar contraseña</from-outcome>
+			<to-view-id>/restricted/admin/cambiarPasswordAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/gestionUsuarios.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/restricted/admin/cambiarPasswordAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/restricted/admin/editarUsuarioAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>nomatch</from-outcome>
+			<to-view-id>/restricted/admin/cambiarPasswordAdmin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+</faces-config>

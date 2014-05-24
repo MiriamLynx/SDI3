@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/template-general.xhtml">
+
+	<ui:define name="titulo">
+		<center>
+			<img src="#{controllerSettings.nuevaAsignatura}" /> <br />
+			<ui:include src="/snippets/language-form.xhtml" />
+		</center>
+	</ui:define>
+	<ui:define name="cuerpo">
+		<center>
+			<table>
+				<tr>
+					<td><h:form>
+							<h:commandLink value="#{msgs.salir}"
+								action="#{controllerSesion.logout}" />
+						</h:form></td>
+				</tr>
+			</table>
+			<br />
+			<h:form>
+				<table border="1">
+					<tr>
+						<th>#{msgs.codigo}</th>
+						<th><h:panelGroup>
+								<h:inputText id="codigo"
+									value="#{controllerAsignaturas.nuevo_codigo}" required="true"
+									requiredMessage="#{msgs.campo_obligatorio}" />
+								<h:message for="codigo" />
+							</h:panelGroup></th>
+					</tr>
+					<tr>
+						<th>#{msgs.nombre}</th>
+						<th><h:panelGroup>
+								<h:inputText id="nombre"
+									value="#{controllerAsignaturas.nuevo_nombre}" required="true"
+									requiredMessage="#{msgs.campo_obligatorio}" />
+								<h:message for="nombre" />
+							</h:panelGroup></th>
+					</tr>
+					<tr>
+						<th>#{msgs.curso}</th>
+						<th><h:panelGroup>
+								<h:inputText id="curso"
+									value="#{controllerAsignaturas.nuevo_curso}" required="true"
+									requiredMessage="#{msgs.campo_obligatorio}" />
+								<h:message for="curso" />
+							</h:panelGroup></th>
+					</tr>
+					<tr>
+						<th>#{msgs.creditos}</th>
+						<th><h:panelGroup>
+								<h:inputText id="creditos"
+									value="#{controllerAsignaturas.nuevo_creditos}" required="true"
+									requiredMessage="#{msgs.campo_obligatorio}"
+									validator="#{controllerValidacion.validateNumber}" />
+								<h:message for="creditos" />
+							</h:panelGroup></th>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<center>
+					<h:commandButton align="left" value="#{msgs.enviar}"
+						action="#{controllerAsignaturas.nuevaAsignatura}">
+					</h:commandButton>
+				</center>
+				<br />
+			</h:form>
+			<h:outputLabel value="#{msgs.datos_invalidos}"
+				rendered="#{controllerAsignaturas.invalido}" />
+		</center>
+	</ui:define>
+</ui:composition>
