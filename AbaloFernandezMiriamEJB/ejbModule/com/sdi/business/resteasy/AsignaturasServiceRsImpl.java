@@ -1,4 +1,4 @@
-package impl.sdi.business;
+package com.sdi.business.resteasy;
 
 import impl.sdi.business.classes.asignaturas.AsignarAlumno;
 import impl.sdi.business.classes.asignaturas.AsignarProfesor;
@@ -9,22 +9,14 @@ import impl.sdi.business.classes.asignaturas.NuevaAsignatura;
 import impl.sdi.business.classes.asignaturas.VerAlumnosMatriculados;
 import impl.sdi.business.classes.asignaturas.VerMatriculasByAsignaturaId;
 import impl.sdi.business.classes.usuarios.VerAsignaturasImpartidas;
-import impl.sdi.business.local.AsignaturasServiceLocal;
-import impl.sdi.business.remote.AsignaturasServiceRemote;
 
 import java.util.List;
-
-import javax.ejb.Stateless;
-import javax.jws.WebService;
 
 import com.sdi.model.Asignatura;
 import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 
-@Stateless
-@WebService
-public class EjbAsignaturasService implements AsignaturasServiceLocal,
-		AsignaturasServiceRemote {
+public class AsignaturasServiceRsImpl implements AsignaturasServiceRs {
 
 	@Override
 	public List<Asignatura> getAsignaturas() {
@@ -70,7 +62,8 @@ public class EjbAsignaturasService implements AsignaturasServiceLocal,
 
 	@Override
 	public List<Matricula> getMatriculasByAsignaturaId(String idasignatura) {
-		return new VerMatriculasByAsignaturaId().getMatriculasByAsignaturaId(idasignatura);
+		return new VerMatriculasByAsignaturaId()
+				.getMatriculasByAsignaturaId(idasignatura);
 	}
 
 }

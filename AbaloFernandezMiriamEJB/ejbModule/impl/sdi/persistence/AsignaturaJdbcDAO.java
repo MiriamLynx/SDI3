@@ -3,6 +3,7 @@ package impl.sdi.persistence;
 import java.util.List;
 
 import com.sdi.model.Asignatura;
+import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 import com.sdi.persistence.AsignaturaDao;
 
@@ -57,6 +58,11 @@ public class AsignaturaJdbcDAO implements AsignaturaDao {
 	@Override
 	public List<Asignatura> buscarAsignaturas(String nombre_buscado) {
 		return new AsignaturaJdbc().buscarAsignaturas(nombre_buscado);
+	}
+
+	@Override
+	public List<Matricula> getMatriculasByAsignaturaId(String idAsignatura) {
+		return new AsignaturaJdbc().getMatriculasByAsignaturaId(idAsignatura);
 	}
 
 }

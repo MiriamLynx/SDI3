@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.sdi.business.exception.BusinessException;
 import com.sdi.model.Asignatura;
+import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 import com.sdi.persistence.exception.PersistenceException;
 
@@ -307,6 +308,68 @@ public class AsignaturaJdbc {
 			throw new BusinessException("Valores invalidos");
 		}
 		return asignaturas;
+	}
+
+	/**
+	 * Establece la conexion con la bbdd y realiza la consulta.
+	 * 
+	 * @param idAsignatura
+	 * @return listado de matriculas en la asignatura.
+	 */
+	public List<Matricula> getMatriculasByAsignaturaId(String idAsignatura) {
+		List<Matricula> matriculas = new ArrayList<Matricula>();
+		try {
+			c = jdbc.createConnection();
+			PreparedStatement ps = c.prepareStatement(jdbc
+					.getSql("GET_MATRICULAS_BY_ASIGNATURA_ID"));
+			ps.setString(1, idAsignatura);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Matricula matricula = new Matricula(
+						getUsuarioById(rs.getString("id_alumno")),
+						getAsignaturaById(idAsignatura), rs.getInt("calificacion"));
+				;
+				matriculas.add(matricula);
+
+			}
+			jdbc.close(rs, ps);
+			jdbc.close(c);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Valores invalidos");
+		}
+		return matriculas;
+	}
+
+	/**
+	 * Establece la conexion con la bbdd y realiza la consulta.
+	 * 
+	 * @param id
+	 * @return usuario con ese id.
+	 */
+	public Usuario getUsuarioById(String id) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			c = jdbc.createConnection();
+			ps = c.prepareStatement(jdbc.getSql("GET_USUARIO_BY_ID"));
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Usuario usuario = new Usuario(id, rs.getString("nombre"),
+						rs.getString("apellidos"), rs.getString("correo"),
+						rs.getString("password"), rs.getBoolean("validado"),
+						rs.getString("privilegios"));
+				return usuario;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			jdbc.close(rs, ps);
+			jdbc.close(c);
+		}
+		return null;
 	}
 
 }

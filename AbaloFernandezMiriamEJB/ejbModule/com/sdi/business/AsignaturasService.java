@@ -3,6 +3,7 @@ package com.sdi.business;
 import java.util.List;
 
 import com.sdi.model.Asignatura;
+import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 
 /**
@@ -82,5 +83,12 @@ public interface AsignaturasService {
 	 * @return listado de asignaturas con ese nombre.
 	 */
 	List<Asignatura> buscarAsignaturas(String nombre_buscado);
+	
+	/**
+	 * Crea una nueva clase de business y llama a su metodo.
+	 * @param idasignatura
+	 * @return listado de matriculas de una asignatura.
+	 */
+	List<Matricula> getMatriculasByAsignaturaId(String idasignatura);
 
 }

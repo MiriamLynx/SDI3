@@ -3,12 +3,16 @@ package com.sdi.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Clase que modela la tabla Tasignaturas.
  * 
  * @author UO217345
  * 
  */
+@XmlRootElement(name = "asignatura")
 public class Asignatura implements Serializable {
 
 	/**
@@ -36,6 +40,7 @@ public class Asignatura implements Serializable {
 	public Asignatura() {
 	}
 
+	@XmlElement
 	public String getId() {
 		return id;
 	}
@@ -44,6 +49,7 @@ public class Asignatura implements Serializable {
 		this.id = id;
 	}
 
+	@XmlElement
 	public int getCreditos() {
 		return creditos;
 	}
@@ -52,6 +58,7 @@ public class Asignatura implements Serializable {
 		this.creditos = creditos;
 	}
 
+	@XmlElement
 	public String getNombre() {
 		return nombre;
 	}
@@ -64,6 +71,7 @@ public class Asignatura implements Serializable {
 		this.profesores = profesores;
 	}
 
+	@XmlElement
 	public List<Usuario> getProfesores() {
 		return profesores;
 	}
@@ -78,6 +86,7 @@ public class Asignatura implements Serializable {
 		return builder.toString();
 	}
 
+	@XmlElement
 	public List<Matricula> getMatriculas() {
 		return matriculas;
 	}
@@ -86,6 +95,7 @@ public class Asignatura implements Serializable {
 		this.matriculas = matriculas;
 	}
 
+	@XmlElement
 	public String getCurso() {
 		return curso;
 	}

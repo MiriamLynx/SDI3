@@ -3,6 +3,7 @@ package com.sdi.persistence;
 import java.util.List;
 
 import com.sdi.model.Asignatura;
+import com.sdi.model.Matricula;
 import com.sdi.model.Usuario;
 
 /**
@@ -72,5 +73,13 @@ public interface AsignaturaDao {
 	 * @return asignatura eliminada.
 	 */
 	Asignatura eliminarAsignatura(String idAsignatura);
+
+	/**
+	 * Crea una clase JDBC y llama al metodo correspondiente.
+	 * 
+	 * @param idAsignatura
+	 * @return asignatura eliminada.
+	 */
+	List<Matricula> getMatriculasByAsignaturaId(String idAsignatura);
 
 }

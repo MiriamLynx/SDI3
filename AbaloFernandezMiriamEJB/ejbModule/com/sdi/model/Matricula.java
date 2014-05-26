@@ -2,12 +2,16 @@ package com.sdi.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Clase que modela la tabla Tmatriculas.
  * 
  * @author UO217345
  * 
  */
+@XmlRootElement(name = "matricula")
 public class Matricula implements Serializable {
 
 	/**
@@ -28,6 +32,7 @@ public class Matricula implements Serializable {
 
 	}
 
+	@XmlElement
 	public Asignatura getAsignatura() {
 		return asignatura;
 	}
@@ -36,6 +41,7 @@ public class Matricula implements Serializable {
 		this.asignatura = asignatura;
 	}
 
+	@XmlElement
 	public Usuario getAlumno() {
 		return alumno;
 	}
@@ -50,6 +56,7 @@ public class Matricula implements Serializable {
 				+ asignatura + "]";
 	}
 
+	@XmlElement
 	public int getCalificacion() {
 		return calificacion;
 	}

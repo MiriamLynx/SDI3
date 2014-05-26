@@ -3,12 +3,16 @@ package com.sdi.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Clase que modela la tabla Tusuarios.
  * 
  * @author UO217345
  * 
  */
+@XmlRootElement(name = "usuario")
 public class Usuario implements Serializable {
 
 	/**
@@ -49,6 +53,7 @@ public class Usuario implements Serializable {
 		this.email = nuevo_correo;
 	}
 
+	@XmlElement
 	public String getNombre() {
 		return nombre;
 	}
@@ -57,6 +62,7 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
+	@XmlElement
 	public String getApellidos() {
 		return apellidos;
 	}
@@ -65,6 +71,7 @@ public class Usuario implements Serializable {
 		this.apellidos = apellidos;
 	}
 
+	@XmlElement
 	public String getEmail() {
 		return email;
 	}
@@ -77,10 +84,12 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
+	@XmlElement
 	public String getId() {
 		return id;
 	}
 
+	@XmlElement
 	public String getPassword() {
 		return password;
 	}
@@ -89,6 +98,7 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
+	@XmlElement
 	public boolean isActivado() {
 		return activado;
 	}
@@ -97,6 +107,7 @@ public class Usuario implements Serializable {
 		this.activado = activado;
 	}
 
+	@XmlElement
 	public String getPrivilegios() {
 		return privilegios;
 	}
@@ -105,6 +116,7 @@ public class Usuario implements Serializable {
 		this.privilegios = privilegios;
 	}
 
+	@XmlElement
 	public List<Asignatura> getAsignaturas() {
 		return asignaturas;
 	}
@@ -125,6 +137,7 @@ public class Usuario implements Serializable {
 		return builder.toString();
 	}
 
+	@XmlElement
 	public int getNota() {
 		return nota;
 	}
