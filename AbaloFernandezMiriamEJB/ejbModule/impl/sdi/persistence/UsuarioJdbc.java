@@ -573,4 +573,38 @@ public class UsuarioJdbc {
 		return usuarios;
 	}
 
+	/**
+	 * Establece la conexion con la bbdd y realiza la consulta.
+	 * 
+	 * @return listado de alumnos.
+	 */
+	public List<Usuario> getAlumnos() {
+		List<Usuario> alumnos = new ArrayList<Usuario>();
+		Statement st = null;
+		ResultSet rs = null;
+
+		try {
+			c = jdbc.createConnection();
+			st = c.createStatement();
+			rs = st.executeQuery(jdbc.getSql("LISTAR_ALUMNOS"));
+			while (rs.next()) {
+				String id = rs.getString("id");
+				Usuario alumno = new Usuario(id, rs.getString("nombre"),
+						rs.getString("apellidos"), rs.getString("correo"),
+						rs.getString("password"), rs.getBoolean("validado"),
+						rs.getString("privilegios"));
+				alumnos.add(alumno);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			jdbc.close(rs, st);
+			jdbc.close(c);
+		}
+
+		return alumnos;
+	}
+
 }

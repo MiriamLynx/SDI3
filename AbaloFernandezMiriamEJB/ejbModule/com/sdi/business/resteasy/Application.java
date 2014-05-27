@@ -9,7 +9,7 @@ public class Application extends javax.ws.rs.core.Application {
 	private Set<Class<?>> classes = new HashSet<Class<?>>();
 
 	public Application() {
-		classes.add(AsignaturasServiceRsImpl.class);
+		classes.add(ServiceRsImpl.class);
 	}
 
 	@Override

@@ -90,18 +90,41 @@ public class JdbcHelper {
 	}
 
 	public void close(ResultSet rs, Statement st) {
-		// TODO Auto-generated method stub
-
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (Exception ex) {
+			}
+		}
+		;
+		if (st != null) {
+			try {
+				st.close();
+			} catch (Exception ex) {
+			}
+		}
+		;
 	}
 
 	public void close(Connection c) {
-		// TODO Auto-generated method stub
+		if (c != null) {
+			try {
+				c.close();
+			} catch (Exception ex) {
 
+			}
+		}
+		;
 	}
 
 	public void close(PreparedStatement ps) {
-		// TODO Auto-generated method stub
+		if (ps != null) {
+			try {
+				ps.close();
+			} catch (Exception ex) {
 
+			}
+		}
+		;
 	}
-
 }

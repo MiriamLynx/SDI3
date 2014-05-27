@@ -105,4 +105,9 @@ public class UsuarioJdbcDAO implements UsuarioDao {
 	public List<Usuario> buscarUsuariosActivados(String criterio_buscado) {
 		return new UsuarioJdbc().buscarUsuariosActivados(criterio_buscado);
 	}
+
+	@Override
+	public List<Usuario> getAlumnos() {
+		return new UsuarioJdbc().getAlumnos();
+	}
 }

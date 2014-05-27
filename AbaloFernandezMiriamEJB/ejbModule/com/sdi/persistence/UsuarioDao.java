@@ -157,4 +157,11 @@ public interface UsuarioDao {
 	 */
 	List<Usuario> buscarUsuariosActivados(String criterio_buscado);
 
+	/**
+	 * Crea una clase JDBC y llama al metodo correspondiente.
+	 * 
+	 * @return listado de alumnos.
+	 */
+	List<Usuario> getAlumnos();
+
 }
