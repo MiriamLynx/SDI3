@@ -110,4 +110,11 @@ public class UsuarioJdbcDAO implements UsuarioDao {
 	public List<Usuario> getAlumnos() {
 		return new UsuarioJdbc().getAlumnos();
 	}
+
+	@Override
+	public void incrementCounter(String id) {
+		new UsuarioJdbc().incrementCounter(id);
+		
+	}
+
 }

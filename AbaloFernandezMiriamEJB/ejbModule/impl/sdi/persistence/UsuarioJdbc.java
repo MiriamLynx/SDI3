@@ -384,6 +384,7 @@ public class UsuarioJdbc {
 						rs.getString("nombre"), rs.getString("apellidos"),
 						rs.getString("correo"), rs.getString("password"),
 						rs.getBoolean("validado"), rs.getString("privilegios"));
+				profesor.setCounter(rs.getInt("counter"));
 				activados.add(profesor);
 			}
 			jdbc.close(rs, ps);
@@ -413,6 +414,7 @@ public class UsuarioJdbc {
 						rs.getString("nombre"), rs.getString("apellidos"),
 						rs.getString("correo"), rs.getString("password"),
 						rs.getBoolean("validado"), rs.getString("privilegios"));
+				profesor.setCounter(rs.getInt("counter"));
 				desactivados.add(profesor);
 			}
 			jdbc.close(rs, ps);
@@ -605,6 +607,22 @@ public class UsuarioJdbc {
 		}
 
 		return alumnos;
+	}
+
+	public void incrementCounter(String id) {
+		PreparedStatement ps = null;
+		try {
+			c = jdbc.createConnection();
+			ps = c.prepareStatement(jdbc.getSql("INCREMENTAR_CONTADOR"));
+			ps.setString(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new BusinessException("Invalid values", e);
+		} finally {
+			jdbc.close(ps);
+			jdbc.close(c);
+		}
 	}
 
 }

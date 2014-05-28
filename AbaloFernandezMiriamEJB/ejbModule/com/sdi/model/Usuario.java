@@ -27,6 +27,7 @@ public class Usuario implements Serializable {
 	private boolean activado;
 	private String privilegios;
 	private int nota;
+	private int counter;
 
 	// Asignaturas de un profesor
 	private List<Asignatura> asignaturas;
@@ -169,5 +170,14 @@ public class Usuario implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@XmlElement
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 }

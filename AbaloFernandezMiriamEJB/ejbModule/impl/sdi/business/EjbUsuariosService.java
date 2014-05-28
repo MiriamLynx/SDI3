@@ -8,14 +8,17 @@ import impl.sdi.business.classes.usuarios.BuscarProfesores;
 import impl.sdi.business.classes.usuarios.BuscarUsuariosActivados;
 import impl.sdi.business.classes.usuarios.BuscarUsuariosDesactivados;
 import impl.sdi.business.classes.usuarios.DesactivarUsuario;
+import impl.sdi.business.classes.usuarios.IncrementCounter;
 import impl.sdi.business.classes.usuarios.InsertarUsuario;
 import impl.sdi.business.classes.usuarios.ProfesoresListado;
+import impl.sdi.business.classes.usuarios.UsuarioValidar;
 import impl.sdi.business.classes.usuarios.VerExpediente;
 import impl.sdi.business.classes.usuarios.VerUsuariosActivados;
 import impl.sdi.business.classes.usuarios.VerUsuariosDesactivados;
 import impl.sdi.business.local.UsuariosServiceLocal;
 import impl.sdi.business.remote.UsuariosServiceRemote;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -100,5 +103,16 @@ public class EjbUsuariosService implements UsuariosServiceLocal,
 	public List<Usuario> buscarUsuariosDesactivados(String criterio_buscado) {
 		return new BuscarUsuariosDesactivados()
 				.buscarUsuarios(criterio_buscado);
+	}
+
+	@Override
+	public Usuario validar(String idUsuario, String password)
+			throws SQLException {
+		return new UsuarioValidar().validar(idUsuario, password);
+	}
+
+	@Override
+	public void incrementCounter(String id) {
+		new IncrementCounter().increment(id);
 	}
 }

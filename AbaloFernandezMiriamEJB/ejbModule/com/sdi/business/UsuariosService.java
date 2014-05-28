@@ -1,5 +1,6 @@
 package com.sdi.business;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.sdi.business.exception.BusinessException;
@@ -127,5 +128,22 @@ public interface UsuariosService {
 	 * @return listado de usuarios desactivados.
 	 */
 	List<Usuario> buscarUsuariosDesactivados(String criterio_buscado);
+
+	/**
+	 * Crea una nueva clase de business y llama a su metodo.
+	 * 
+	 * @param idUsuario
+	 * @param password
+	 * @return usuario que se corresponde con los datos.
+	 * @throws SQLException
+	 *             en caso de no encontrar el usuario.
+	 */
+	Usuario validar(String idUsuario, String password) throws SQLException;
+
+	/**
+	 * Crea una nueva clase de business y llama a su metodo.
+	 * @param id
+	 */
+	void incrementCounter(String id);
 
 }

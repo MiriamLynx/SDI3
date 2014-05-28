@@ -164,4 +164,11 @@ public interface UsuarioDao {
 	 */
 	List<Usuario> getAlumnos();
 
+	/**
+	 * Crea una clase JDBC y llama al metodo correspondiente.
+	 * @param id 
+	 * 
+	 */
+	void incrementCounter(String id);
+
 }
